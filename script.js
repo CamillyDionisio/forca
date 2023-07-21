@@ -1,11 +1,23 @@
-const tecnologias = ["java", "react", "node", "python", "php"];
-const palavraSecreta =
-  tecnologias[Math.floor(Math.random() * tecnologias.length)];
+//para te ajudar na contagem de xp, não há código para diferenciação de letra maiúscula ou minúscula e nem com acentuação.
+
+//20 palavras, 3 temas, ainda sem acesso a dicas
+const cores = ["verde", "vermelho", "azul", "branco", "preto"];
+let palavraSecreta =
+  cores[Math.floor(Math.random() * cores.length)];
+
+const pais = ["brasil", "alemanha", "angola", "argentina", "chile", "egito", "iraque", "cuba"];
+ palavraSecreta =
+    pais[Math.floor(Math.random() * pais.length)];
+
+const animal = ["cachorro", "gato", "peixe", "cobra", "mosca"];
+ palavraSecreta =
+      animal[Math.floor(Math.random() * animal.length)];
+
 const letrasErradas = [];
 const letrasCorretas = [];
 
 document.addEventListener("keydown", (evento) => {
-  const codigo = evento.keyCode; // 65 - 90 (intervalo)
+  const codigo = evento.keyCode; // 65 - 90 (intervalo de A até Z, não permitindo números)
   if (isLetra(codigo)) {
     const letra = evento.key;
     if (letrasErradas.includes(letra)) {
@@ -30,7 +42,7 @@ function atualizarJogo() {
 
 function mostrarLetrasErradas() {
   const div = document.querySelector(".letras-erradas-container");
-  div.innerHTML = "<h3>Letras erradas</h3>";
+  div.innerHTML = "<h3>Histórico de letras</h3>";
   letrasErradas.forEach((letra) => {
     div.innerHTML += `<span>${letra}</span>`;
   });
@@ -53,10 +65,12 @@ function checarJogo() {
   const container = document.querySelector(".palavra-secreta-container");
   const partesCorpo = document.querySelectorAll(".forca-parte");
 
+// condição de derrota
   if (letrasErradas.length === partesCorpo.length) {
     mensagem = "Fim de jogo! Você perdeu!";
   }
 
+//condição de vitória
   if (palavraSecreta === container.innerText) {
     mensagem = "Parabéns! Você ganhou!";
   }
@@ -67,6 +81,7 @@ function checarJogo() {
   }
 }
 
+//desenhar uma parte do corpo caso o usuário erre
 function desenharForca() {
   const partesCorpo = document.querySelectorAll(".forca-parte");
   for (let i = 0; i < letrasErradas.length; i++) {
@@ -74,6 +89,7 @@ function desenharForca() {
   }
 }
 
+//aviso letra repetida
 function mostrarAvisoLetraRepetida() {
   const aviso = document.querySelector(".aviso-palavra-repetida");
   aviso.classList.add("show");
@@ -86,6 +102,7 @@ function isLetra(codigo) {
   return codigo >= 65 && codigo <= 90;
 }
 
+//possibilidade de reicinar o jogo
 function reiniciarJogo() {
   window.location.reload();
 }
